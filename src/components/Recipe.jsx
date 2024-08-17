@@ -9,7 +9,7 @@ export default function Recipe({ title, picture }) {
   }
 
   return (
-    <a onClick={handleClick}>
+    <div onClick={handleClick}>
       <div className={`${styles.recipe}`}>
         <div className={`${styles.imageContainer}`}>
           <img
@@ -24,6 +24,6 @@ export default function Recipe({ title, picture }) {
           <i className={`fa-solid fa-heart ${liked ? "text-primary" : ""}`}></i>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
