@@ -1,6 +1,10 @@
 import style from "./Header.module.scss";
 import cookchef from "../assets/images/cookchef.png";
+import { useState } from "react";
+import MenuMobile from "./MenuMobile";
 export default function Header() {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <header className={`${style.header} d-flex flex-row align-items-center`}>
       <div className="flex-fill">
@@ -16,7 +20,19 @@ export default function Header() {
         </button>
         <button className="btn btn-primary">Connexion</button>
       </ul>
-      <i className={`fa-solid fa-bars ${style.headerXs}`}></i>
+      <i
+        className={`fa-solid fa-bars ${style.headerXs}`}
+        onClick={() => setShowMenu(true)}
+      ></i>
+      {showMenu && (
+        <>
+          <div
+            className="calc"
+            onClick={() => setShowMenu(false)}
+          ></div>
+          <MenuMobile />
+        </>
+      )}
     </header>
   );
 }
