@@ -1,9 +1,9 @@
-import styles from "./Content.module.scss";
-import Recipe from "./Recipe";
-import { data } from "../data/recipes";
+import styles from "./Homepage.module.scss";
+import Recipe from "./components/Recipe/Recipe";
+import { data } from "../../data/recipes";
 import { useState } from "react";
 
-export default function Content() {
+export default function Homepage() {
   const [filter, setFilter] = useState("");
   function handleInput(e) {
     const filter = e.target.value;
