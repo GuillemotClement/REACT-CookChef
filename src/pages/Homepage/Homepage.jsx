@@ -1,17 +1,51 @@
 import Loading from "../../components/Loading/Loading";
+import { ApiContext } from "../../context/ApiContext";
 import styles from "./Homepage.module.scss";
 import Recipe from "./components/Recipe/Recipe";
 // import { data } from "../../data/recipes";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function Homepage() {
   // on vient stocker la listes des recettes
   const [recipes, setRecipes] = useState([]);
-
   // on vient créer une variable d'état pour l'affichage du gif de chargement
   const [isLoading, setIsLoading] = useState(true);
-
   const [filter, setFilter] = useState("");
+
+  // on vient utiliser le context pour récupérer l'url
+  const BASE_URL_API = useContext(ApiContext);
+
+  //on vient utiliser un useEffect qui viendras s'exécuter une seule fois. On viens la passer un tableau de dépendances vide.
+  useEffect(() => {
+    //on viens verif si il faut faire un call
+    let cancel = false;
+    async function fetchRecipes() {
+      try {
+        setIsLoading(true);
+        // on vient faire la requête pour récupérer les données
+        const response = await fetch(BASE_URL_API);
+        if (response.ok && !cancel) {
+          //on vient récupèrer les recettes dans recipes
+          const recipes = await response.json();
+          //si la réponse est un tableau
+          //si true on retourne le recipes
+          //sinon on ajoute dans un nouveau tableau
+          setRecipes(Array.isArray(recipes) ? recipes : [recipes]);
+        }
+      } catch (e) {
+        console.log("Erreur :", e);
+      } finally {
+        if (!cancel) {
+          setIsLoading(false);
+        }
+      }
+    }
+    //on vient appeler la fonction d'appel
+    fetchRecipes();
+    //on viens utiliser une fonction de clean up
+    return () => (cancel = true);
+  }, []);
+
   function handleInput(e) {
     const filter = e.target.value;
     setFilter(filter.trim().toLowerCase());
