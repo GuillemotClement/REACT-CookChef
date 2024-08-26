@@ -1,9 +1,11 @@
 import styles from "./Homepage.module.scss";
 import Recipe from "./components/Recipe/Recipe";
-import { data } from "../../data/recipes";
+// import { data } from "../../data/recipes";
 import { useState } from "react";
 
 export default function Homepage() {
+  // on vient stocker la listes des recettes
+  const [recipes, setRecipes] = useState([]);
   const [filter, setFilter] = useState("");
   function handleInput(e) {
     const filter = e.target.value;
@@ -26,11 +28,11 @@ export default function Homepage() {
           />
         </div>
         <div className={styles.grid}>
-          {data
+          {recipes
             .filter((recipe) => recipe.title.toLowerCase().startsWith(filter))
             .map((recipe) => (
               <Recipe
-                key={recipe.id}
+                key={recipe._id}
                 title={recipe.title}
                 picture={recipe.picture}
               />
