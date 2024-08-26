@@ -1,3 +1,4 @@
+import Loading from "../../components/Loading/Loading";
 import styles from "./Homepage.module.scss";
 import Recipe from "./components/Recipe/Recipe";
 // import { data } from "../../data/recipes";
@@ -16,9 +17,9 @@ export default function Homepage() {
     setFilter(filter.trim().toLowerCase());
   }
   return (
-    <div className="flex-fill container p-20">
+    <div className="flex-fill container d-flex flex-column p-20">
       <h1 className="my-30">Découvrez nos nouvelles recettes</h1>
-      <div className={`card p-20 d-flex flex-column ${styles.contentCard}`}>
+      <div className={`card flex-fill p-20 d-flex flex-column mb-20 ${styles.contentCard}`}>
         <div
           className={`d-flex flex-row justify-content-center align-item-center my-30 ${styles.searchBar}`}
         >
@@ -31,14 +32,11 @@ export default function Homepage() {
             onInput={handleInput}
           />
         </div>
-        <div className={styles.grid}>
-          {isLoading ? (
-            <div className="">
-              <p>Recettes en cours de chargement</p>
-              <i className="fa-solid fa-circle-notch fa-spin"></i>
-            </div>
-          ) : (
-            recipes
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className={styles.grid}>
+            {recipes
               .filter((recipe) => recipe.title.toLowerCase().startsWith(filter))
               .map((recipe) => (
                 <Recipe
@@ -46,9 +44,9 @@ export default function Homepage() {
                   title={recipe.title}
                   picture={recipe.picture}
                 />
-              ))
-          )}
-        </div>
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );
