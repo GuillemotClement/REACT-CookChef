@@ -6,6 +6,10 @@ import { useState } from "react";
 export default function Homepage() {
   // on vient stocker la listes des recettes
   const [recipes, setRecipes] = useState([]);
+
+  // on vient créer une variable d'état pour l'affichage du gif de chargement
+  const [isLoading, setIsLoading] = useState(true);
+
   const [filter, setFilter] = useState("");
   function handleInput(e) {
     const filter = e.target.value;
@@ -28,15 +32,22 @@ export default function Homepage() {
           />
         </div>
         <div className={styles.grid}>
-          {recipes
-            .filter((recipe) => recipe.title.toLowerCase().startsWith(filter))
-            .map((recipe) => (
-              <Recipe
-                key={recipe._id}
-                title={recipe.title}
-                picture={recipe.picture}
-              />
-            ))}
+          {isLoading ? (
+            <div className="">
+              <p>Recettes en cours de chargement</p>
+              <i className="fa-solid fa-circle-notch fa-spin"></i>
+            </div>
+          ) : (
+            recipes
+              .filter((recipe) => recipe.title.toLowerCase().startsWith(filter))
+              .map((recipe) => (
+                <Recipe
+                  key={recipe._id}
+                  title={recipe.title}
+                  picture={recipe.picture}
+                />
+              ))
+          )}
         </div>
       </div>
     </div>
