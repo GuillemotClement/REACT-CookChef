@@ -87,6 +87,9 @@ export default function Homepage() {
               ))}
           </div>
         )}
+        <div className="d-flex flex-row justify-content-center align-items-center p-20">
+          <button className="btn btn-primary">Charger plus de recettes</button>
+        </div>
       </div>
     </div>
   );
