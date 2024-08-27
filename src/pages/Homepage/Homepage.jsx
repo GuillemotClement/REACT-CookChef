@@ -23,7 +23,7 @@ export default function Homepage() {
       try {
         setIsLoading(true);
         // on vient faire la requête pour récupérer les données
-        const response = await fetch(BASE_URL_API);
+        const response = await fetch(`${BASE_URL_API}?limit=18`);
         if (response.ok && !cancel) {
           //on vient récupèrer les recettes dans recipes
           const recipes = await response.json();
