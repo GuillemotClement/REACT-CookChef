@@ -15,6 +15,9 @@ export default function Homepage() {
   // on vient utiliser le context pour récupérer l'url
   const BASE_URL_API = useContext(ApiContext);
 
+  //cette valeur permet de savoir combkien de résultat il faut skip
+  const [page, setPage] = useState(1);
+
   //on vient utiliser un useEffect qui viendras s'exécuter une seule fois. On viens la passer un tableau de dépendances vide.
   useEffect(() => {
     //on viens verif si il faut faire un call
@@ -23,14 +26,16 @@ export default function Homepage() {
       try {
         setIsLoading(true);
         // on vient faire la requête pour récupérer les données
-        const response = await fetch(`${BASE_URL_API}?limit=18`);
+        const response = await fetch(`${BASE_URL_API}?skip=${(page - 1) * 18}&limit=18`);
         if (response.ok && !cancel) {
           //on vient récupèrer les recettes dans recipes
-          const recipes = await response.json();
+          const newRecipes = await response.json();
           //si la réponse est un tableau
           //si true on retourne le recipes
           //sinon on ajoute dans un nouveau tableau
-          setRecipes(Array.isArray(recipes) ? recipes : [recipes]);
+          setRecipes((x) =>
+            Array.isArray(newRecipes) ? [...x, ...newRecipes] : [...x, newRecipes]
+          );
         }
       } catch (e) {
         console.log("Erreur :", e);
@@ -44,7 +49,7 @@ export default function Homepage() {
     fetchRecipes();
     //on viens utiliser une fonction de clean up
     return () => (cancel = true);
-  }, [BASE_URL_API]);
+  }, [BASE_URL_API, page]);
 
   function updateRecipe(updatedRecipe) {
     setRecipes(
@@ -56,9 +61,12 @@ export default function Homepage() {
     const filter = e.target.value;
     setFilter(filter.trim().toLowerCase());
   }
+
   return (
     <div className="flex-fill container d-flex flex-column p-20">
-      <h1 className="my-30">Découvrez nos nouvelles recettes</h1>
+      <h1 className="my-30">
+        Découvrez nos nouvelles recettes <small className={styles.small}>{recipes.length}</small>
+      </h1>
       <div className={`card flex-fill p-20 d-flex flex-column mb-20 ${styles.contentCard}`}>
         <div
           className={`d-flex flex-row justify-content-center align-item-center my-30 ${styles.searchBar}`}
@@ -88,7 +96,12 @@ export default function Homepage() {
           </div>
         )}
         <div className="d-flex flex-row justify-content-center align-items-center p-20">
-          <button className="btn btn-primary">Charger plus de recettes</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => setPage(page + 1)}
+          >
+            Charger plus de recettes
+          </button>
         </div>
       </div>
     </div>
