@@ -1,6 +1,6 @@
 import styles from "./Recipe.module.scss";
 
-export default function Recipe({ title, picture, liked, _id }) {
+export default function Recipe({ recipe: { _id, liked, title, picture } }) {
   function handleClick() {}
 
   return (
