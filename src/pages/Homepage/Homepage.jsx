@@ -44,7 +44,13 @@ export default function Homepage() {
     fetchRecipes();
     //on viens utiliser une fonction de clean up
     return () => (cancel = true);
-  }, []);
+  }, [BASE_URL_API]);
+
+  function updateRecipe(updatedRecipe) {
+    setRecipes(
+      recipes.map((recipe) => (recipe._id === updatedRecipe._id ? updatedRecipe : recipe))
+    );
+  }
 
   function handleInput(e) {
     const filter = e.target.value;
@@ -76,6 +82,7 @@ export default function Homepage() {
                 <Recipe
                   key={recipe._id}
                   recipe={recipe}
+                  toggleLikedRecipe={updateRecipe}
                 />
               ))}
           </div>
