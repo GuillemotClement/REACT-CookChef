@@ -80,7 +80,7 @@ export default function Homepage() {
             onInput={handleInput}
           />
         </div>
-        {isLoading ? (
+        {isLoading && !recipes.length ? (
           <Loading />
         ) : (
           <div className={styles.grid}>
