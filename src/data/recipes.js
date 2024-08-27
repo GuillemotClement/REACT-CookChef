@@ -2,10 +2,12 @@ export const data = [
   {
     title: "Burger",
     picture: "https://cdn.pixabay.com/photo/2022/11/09/13/58/cheeseburger-7580676_1280.jpg",
+    like: true,
   },
   {
     title: "Tacos",
     picture: "https://cdn.pixabay.com/photo/2023/06/20/10/05/tacos-8076612_1280.jpg",
+    like: true,
   },
   {
     title: "Oeuf",

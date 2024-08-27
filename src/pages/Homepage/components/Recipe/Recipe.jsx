@@ -1,12 +1,7 @@
-import { useState } from "react";
 import styles from "./Recipe.module.scss";
 
-export default function Recipe({ title, picture }) {
-  const [liked, setLiked] = useState(false);
-
-  function handleClick() {
-    setLiked(!liked);
-  }
+export default function Recipe({ title, picture, liked, _id }) {
+  function handleClick() {}
 
   return (
     <div onClick={handleClick}>

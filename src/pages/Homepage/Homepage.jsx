@@ -75,8 +75,7 @@ export default function Homepage() {
               .map((recipe) => (
                 <Recipe
                   key={recipe._id}
-                  title={recipe.title}
-                  picture={recipe.picture}
+                  recipe={recipe}
                 />
               ))}
           </div>
