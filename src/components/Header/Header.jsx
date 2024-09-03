@@ -2,7 +2,7 @@ import style from "./Header.module.scss";
 import cookchef from "../../assets/images/cookchef.png";
 import { useState } from "react";
 import MenuMobile from "./components/MenuMobile/MenuMobile";
-export default function Header() {
+export default function Header({ setPage }) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -14,6 +14,12 @@ export default function Header() {
         />
       </div>
       <ul className={`${style.headerList}`}>
+        <button
+          className="btn btn-primary mr-5"
+          onClick={() => setPage("admin")}
+        >
+          Ajouter un nouvelle recettee
+        </button>
         <button className="mr-5 btn btn-reverse-primary">
           <i className="fa-solid fa-heart mr-5"></i>
           <span>Wishlist</span>
