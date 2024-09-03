@@ -20,6 +20,7 @@ export function useFetchData(url, page) {
         if (page) {
           queryParam.append("limit", 18);
           queryParam.append("skip", (page - 1) * 18);
+          queryParam.append("sort", "createdAt:-1");
         }
 
         // on vient faire la requête pour récupérer les données
