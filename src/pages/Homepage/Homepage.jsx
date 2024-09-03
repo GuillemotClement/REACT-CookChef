@@ -5,12 +5,9 @@ import Recipe from "./components/Recipe/Recipe";
 // import { data } from "../../data/recipes";
 import { useContext, useEffect, useState } from "react";
 import Search from "./components/Search/Search";
+import { useFetchData } from "../../hooks";
 
 export default function Homepage() {
-  // on vient stocker la listes des recettes
-  const [recipes, setRecipes] = useState([]);
-  // on vient créer une variable d'état pour l'affichage du gif de chargement
-  const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("");
   // on vient utiliser le context pour récupérer l'url
   const BASE_URL_API = useContext(ApiContext);
@@ -18,38 +15,7 @@ export default function Homepage() {
   //cette valeur permet de savoir combkien de résultat il faut skip
   const [page, setPage] = useState(1);
 
-  //on vient utiliser un useEffect qui viendras s'exécuter une seule fois. On viens la passer un tableau de dépendances vide.
-  useEffect(() => {
-    //on viens verif si il faut faire un call
-    let cancel = false;
-    async function fetchRecipes() {
-      try {
-        setIsLoading(true);
-        // on vient faire la requête pour récupérer les données
-        const response = await fetch(`${BASE_URL_API}?skip=${(page - 1) * 18}&limit=18`);
-        if (response.ok && !cancel) {
-          //on vient récupèrer les recettes dans recipes
-          const newRecipes = await response.json();
-          //si la réponse est un tableau
-          //si true on retourne le recipes
-          //sinon on ajoute dans un nouveau tableau
-          setRecipes((x) =>
-            Array.isArray(newRecipes) ? [...x, ...newRecipes] : [...x, newRecipes]
-          );
-        }
-      } catch (e) {
-        console.log("Erreur :", e);
-      } finally {
-        if (!cancel) {
-          setIsLoading(false);
-        }
-      }
-    }
-    //on vient appeler la fonction d'appel
-    fetchRecipes();
-    //on viens utiliser une fonction de clean up
-    return () => (cancel = true);
-  }, [BASE_URL_API, page]);
+  const [[recipes, setRecipes], isLoading] = useFetchData(BASE_URL_API, page);
 
   function updateRecipe(updatedRecipe) {
     setRecipes(
