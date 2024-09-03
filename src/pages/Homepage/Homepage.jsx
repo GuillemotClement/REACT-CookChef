@@ -4,6 +4,7 @@ import styles from "./Homepage.module.scss";
 import Recipe from "./components/Recipe/Recipe";
 // import { data } from "../../data/recipes";
 import { useContext, useEffect, useState } from "react";
+import Search from "./components/Search/Search";
 
 export default function Homepage() {
   // on vient stocker la listes des recettes
@@ -11,7 +12,6 @@ export default function Homepage() {
   // on vient créer une variable d'état pour l'affichage du gif de chargement
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("");
-
   // on vient utiliser le context pour récupérer l'url
   const BASE_URL_API = useContext(ApiContext);
 
@@ -57,29 +57,13 @@ export default function Homepage() {
     );
   }
 
-  function handleInput(e) {
-    const filter = e.target.value;
-    setFilter(filter.trim().toLowerCase());
-  }
-
   return (
     <div className="flex-fill container d-flex flex-column p-20">
       <h1 className="my-30">
         Découvrez nos nouvelles recettes <small className={styles.small}>{recipes.length}</small>
       </h1>
       <div className={`card flex-fill p-20 d-flex flex-column mb-20 ${styles.contentCard}`}>
-        <div
-          className={`d-flex flex-row justify-content-center align-item-center my-30 ${styles.searchBar}`}
-        >
-          <i className="fa-solid fa-magnifying-glass mr-15"></i>
-          <input
-            type="text"
-            placeholder="search ..."
-            value={filter}
-            className="flex-fill"
-            onInput={handleInput}
-          />
-        </div>
+        <Search setFilter={setFilter} />
         {isLoading && !recipes.length ? (
           <Loading />
         ) : (
