@@ -7,6 +7,9 @@
   color: var(--primary);
   position: relative;
   height: 58px;
+  &:hover {
+    cursor: pointer;
+  }
   img {
     width: 130px;
   }

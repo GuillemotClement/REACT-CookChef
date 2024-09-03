@@ -7,7 +7,10 @@ export default function Header({ setPage }) {
 
   return (
     <header className={`${style.header} d-flex flex-row align-items-center`}>
-      <div className="flex-fill">
+      <div
+        onClick={() => setPage("homepage")}
+        className="flex-fill"
+      >
         <img
           src={cookchef}
           alt="logo"
@@ -15,12 +18,12 @@ export default function Header({ setPage }) {
       </div>
       <ul className={`${style.headerList}`}>
         <button
-          className="btn btn-primary mr-5"
+          className="btn btn-primary mr-15"
           onClick={() => setPage("admin")}
         >
           Ajouter un nouvelle recettee
         </button>
-        <button className="mr-5 btn btn-reverse-primary">
+        <button className="mr-5 btn btn-reverse-primary mr-15">
           <i className="fa-solid fa-heart mr-5"></i>
           <span>Wishlist</span>
         </button>
@@ -36,7 +39,7 @@ export default function Header({ setPage }) {
             className="calc"
             onClick={() => setShowMenu(false)}
           ></div>
-          <MenuMobile />
+          <MenuMobile setPage={setPage} />
         </>
       )}
     </header>
